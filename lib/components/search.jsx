@@ -15,19 +15,71 @@ class Search extends React.Component {
     };
   }
   componentDidMount() {
+    console.log('mounting search');
     const defaultBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(37.763972, -122.441297),
       new google.maps.LatLng(37.783972, -122.421297));
     const options = {
       bounds: defaultBounds
     };
-    const input = document.getElementById('google-search')
-    const autocomplete = new google.maps.places.Autocomplete(input, options);
+    const input = document.getElementById('google-search');
+    window.searchBox = new google.maps.places.SearchBox(input);
+    // const autocomplete = new google.maps.places.Autocomplete(input, options);
     // google.maps.event.addListener(autocomplete, "place_changed", console.log('autocomplete changed')
     // );
-    // window.map.addListener('bounds_changed', () => {
-    //   searchBox.setBounds(map.getBounds());
-    // });
+
+    // ******************************
+    // start of google demo code
+    // manually finds places upon changing search params and adds/remove markers for each location on the map
+
+    let markers = [];
+    window.searchBox.addListener('places_changed', function() {
+      const places = window.searchBox.getPlaces();
+
+      if (places.length == 0) {
+        return;
+      }
+
+      // Clear out the old markers.
+      markers.forEach(function(marker) {
+        marker.setMap(null);
+      });
+      markers = [];
+
+      // For each place, get the icon, name and location.
+      let bounds = new google.maps.LatLngBounds();
+      places.forEach(function(place) {
+        if (!place.geometry) {
+          console.log("Returned place contains no geometry");
+          return;
+        }
+        var icon = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25)
+        };
+
+        // Create a marker for each place.
+        markers.push(new google.maps.Marker({
+          map: map,
+          icon: icon,
+          title: place.name,
+          position: place.geometry.location
+        }));
+
+        if (place.geometry.viewport) {
+          // Only geocodes have viewport.
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      window.map.fitBounds(bounds);
+    });
+    // end of google api demo code
+    // ************************
   }
 
   updateSearch(e) {

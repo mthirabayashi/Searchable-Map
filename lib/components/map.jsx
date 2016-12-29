@@ -4,20 +4,30 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     console.log('creating map');
+    this.loadMap();
     this.state = {};
     // html5 code to get current location from browser
     // navigator.geolocation.getCurrentPosition((data) => {console.log(data)})
   }
+
+  loadMap() {
+    console.log('loading map');
+  }
+
   componentDidMount() {
     console.log('map mounted');
     const uluru = {lat: 37.773972, lng: -122.431297};
     window.map = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
-      center: uluru
+      center: uluru,
+      mapTypeId: 'roadmap'
     });
     window.map.addListener('dblclick', () => {
       let zoom = window.map.getZoom() + 1;
       window.map.setZoom(zoom);
+    });
+    window.map.addListener('bounds_changed', () => {
+      window.searchBox.setBounds(window.map.getBounds());
     });
 
     // const marker = new google.maps.Marker({
