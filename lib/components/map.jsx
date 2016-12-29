@@ -13,10 +13,14 @@ class Map extends React.Component {
       zoom: 10,
       center: uluru
     });
-    const marker = new google.maps.Marker({
-      position: uluru,
-      map: window.map
+    window.map.addListener('dblclick', () => {
+      let zoom = window.map.getZoom() + 1;
+      window.map.setZoom(zoom);
     });
+    // const marker = new google.maps.Marker({
+    //   position: uluru,
+    //   map: window.map
+    // });
   }
 
   render() {

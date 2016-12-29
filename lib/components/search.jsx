@@ -49,11 +49,15 @@ class Search extends React.Component {
     const addressesArray = this.state.places;
     for (var x = 0; x < addressesArray.length; x++) {
       $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+addressesArray[x]+'&sensor=false', null, function (data) {
-        var p = data.results[0].geometry.location;
-        var latlng = new google.maps.LatLng(p.lat, p.lng);
-        var aMarker= new google.maps.Marker({
+        const p = data.results[0].geometry.location;
+        const latlng = new google.maps.LatLng(p.lat, p.lng);
+        const aMarker= new google.maps.Marker({
             position: latlng, //it will place marker based on the addresses, which they will be translated as geolocations.
             map: window.map
+        });
+        aMarker.addListener('click', function() {
+          window.map.setZoom(12);
+          window.map.setCenter(aMarker.getPosition());
         });
       });
     }
