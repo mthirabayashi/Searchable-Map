@@ -53,7 +53,7 @@ class Search extends React.Component {
     const addressesArray = this.state.places;
     const that = this;
     for (let x = 0; x < addressesArray.length; x++) {
-      $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+addressesArray[x]+'&sensor=false', null, function (data) {
+      $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address='+addressesArray[x]+'&sensor=false', null, function (data) {
         console.log(data);
         if (data.status === 'ZERO_RESULTS') {
           // alert('could not find on map');
