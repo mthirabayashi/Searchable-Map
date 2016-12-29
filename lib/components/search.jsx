@@ -8,6 +8,7 @@ class Search extends React.Component {
     this.updateSearch = this.updateSearch.bind(this);
     this.displayMarkers = this.displayMarkers.bind(this);
     this.notFound = this.notFound.bind(this);
+    this.temp = this.temp.bind(this);
     this.state = {
       places: [],
       errors: false
@@ -24,6 +25,9 @@ class Search extends React.Component {
     const autocomplete = new google.maps.places.Autocomplete(input, options);
     // google.maps.event.addListener(autocomplete, "place_changed", console.log('autocomplete changed')
     // );
+    // window.map.addListener('bounds_changed', () => {
+    //   searchBox.setBounds(map.getBounds());
+    // });
   }
 
   updateSearch(e) {
@@ -46,6 +50,16 @@ class Search extends React.Component {
     }
     console.log(places);
     this.setState({places: places}, this.displayMarkers());
+    // this.setState({places: places}, this.displayMarkers());
+  }
+
+  temp() {
+    // $.getJSON('https://maps.googleapis.com/maps/api/place/textsearch/xml?query=restaurants+in+Sydney&key=AIzaSyBg_-3mtwqCmsKeGOWdGkgyOHNyfgNH774'), function (data) {
+    //   console.log(data);
+    // };
+    $.getJSON('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurant&keyword=cruise&key=AIzaSyBg_-3mtwqCmsKeGOWdGkgyOHNyfgNH774'), function(data) {
+      console.log(data);
+    };
   }
 
   displayMarkers() {

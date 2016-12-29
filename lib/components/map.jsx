@@ -5,6 +5,8 @@ class Map extends React.Component {
     super(props);
     console.log('creating map');
     this.state = {};
+    // html5 code to get current location from browser
+    // navigator.geolocation.getCurrentPosition((data) => {console.log(data)})
   }
   componentDidMount() {
     console.log('map mounted');
@@ -17,6 +19,7 @@ class Map extends React.Component {
       let zoom = window.map.getZoom() + 1;
       window.map.setZoom(zoom);
     });
+
     // const marker = new google.maps.Marker({
     //   position: uluru,
     //   map: window.map
