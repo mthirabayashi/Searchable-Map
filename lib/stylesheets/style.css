@@ -12,7 +12,7 @@
 }
 
 #map {
-  margin-top: 25px;
+  margin-top: 10px;
   height: 400px;
   width: 600px;
   border: 1px solid blue;
@@ -31,4 +31,8 @@
   border-radius: none;
   background-color: blue;
   outline: none;
+}
+
+#errors {
+  height: 12px;
 }
