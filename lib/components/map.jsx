@@ -9,13 +9,13 @@ class Map extends React.Component {
   componentDidMount() {
     console.log('map mounted');
     const uluru = {lat: 37.773972, lng: -122.431297};
-    const map = new google.maps.Map(document.getElementById('map'), {
+    window.map = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
       center: uluru
     });
-    var marker = new google.maps.Marker({
+    const marker = new google.maps.Marker({
       position: uluru,
-      map: map
+      map: window.map
     });
   }
 

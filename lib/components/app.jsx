@@ -6,7 +6,7 @@ import Search from './search';
 class App extends React.Component {
   render() {
     return (
-      <div>
+      <div id='app'>
         <Search />
         <Map />
       </div>
