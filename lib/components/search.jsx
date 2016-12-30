@@ -5,7 +5,7 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.createMarker = this.createMarker.bind(this);
-    this.updateSearch = this.updateSearch.bind(this);
+    this.createSearch = this.createSearch.bind(this);
     this.displayMarkers = this.displayMarkers.bind(this);
     this.notFound = this.notFound.bind(this);
     this.temp = this.temp.bind(this);
@@ -32,63 +32,112 @@ class Search extends React.Component {
     // start of google demo code
     // manually finds places upon changing search params and adds/remove markers for each location on the map
 
-    let markers = [];
-    window.searchBox.addListener('places_changed', function() {
-      const places = window.searchBox.getPlaces();
-
-      if (places.length == 0) {
-        return;
-      }
-
-      // Clear out the old markers.
-      markers.forEach(function(marker) {
-        marker.setMap(null);
-      });
-      markers = [];
-
-      // For each place, get the icon, name and location.
-      let bounds = new google.maps.LatLngBounds();
-      places.forEach(function(place) {
-        if (!place.geometry) {
-          console.log("Returned place contains no geometry");
-          return;
-        }
-        var icon = {
-          url: place.icon,
-          size: new google.maps.Size(71, 71),
-          origin: new google.maps.Point(0, 0),
-          anchor: new google.maps.Point(17, 34),
-          scaledSize: new google.maps.Size(25, 25)
-        };
-
-        // Create a marker for each place.
-        markers.push(new google.maps.Marker({
-          map: map,
-          icon: icon,
-          title: place.name,
-          position: place.geometry.location
-        }));
-
-        if (place.geometry.viewport) {
-          // Only geocodes have viewport.
-          bounds.union(place.geometry.viewport);
-        } else {
-          bounds.extend(place.geometry.location);
-        }
-      });
-      window.map.fitBounds(bounds);
-    });
+    // let markers = [];
+    // window.searchBox.addListener('places_changed', function() {
+    //   const places = window.searchBox.getPlaces();
+    //
+    //   if (places.length == 0) {
+    //     return;
+    //   }
+    //
+    //   // Clear out the old markers.
+    //   markers.forEach(function(marker) {
+    //     marker.setMap(null);
+    //   });
+    //   markers = [];
+    //
+    //   // For each place, get the icon, name and location.
+    //   let bounds = new google.maps.LatLngBounds();
+    //   places.forEach(function(place) {
+    //     if (!place.geometry) {
+    //       console.log("Returned place contains no geometry");
+    //       return;
+    //     }
+    //     console.log(place.icon);
+    //     // url: "https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png" -- default red marker
+    //     var icon = {
+    //       url: place.icon,
+    //       size: new google.maps.Size(71, 71),
+    //       origin: new google.maps.Point(0, 0),
+    //       anchor: new google.maps.Point(17, 34),
+    //       scaledSize: new google.maps.Size(25, 25)
+    //     };
+    //
+    //     // Create a marker for each place.
+    //     markers.push(new google.maps.Marker({
+    //       map: window.map,
+    //       icon: icon,
+    //       title: place.name,
+    //       position: place.geometry.location
+    //     }));
+    //
+    //     if (place.geometry.viewport) {
+    //       // Only geocodes have viewport.
+    //       bounds.union(place.geometry.viewport);
+    //     } else {
+    //       bounds.extend(place.geometry.location);
+    //     }
+    //   });
+    //   console.log(bounds);
+    //   window.map.fitBounds(bounds);
+    // });
     // end of google api demo code
     // ************************
+    // TODO move the above code into the search button functionality
   }
 
-  updateSearch(e) {
-    console.log('search field updated');
-    // console.log(e.target.value);
-    // this.setState({
-    //   search: e.target.value
-    // }, console.log(e.target.value));
+  createSearch(e) {
+    let markers = [];
+    const places = window.searchBox.getPlaces();
+
+    if (places.length == 0) {
+      return;
+    }
+
+    // Clear out the old markers.
+    markers.forEach(function(marker) {
+      marker.setMap(null);
+    });
+    markers = [];
+
+    // For each place, get the icon, name and location.
+    let bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+      if (!place.geometry) {
+        console.log("Returned place contains no geometry");
+        return;
+      }
+      //     console.log(place.icon);
+      //     // url: "https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png" -- default red marker
+      var icon = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
+
+      // Create a marker for each place.
+      markers.push(new google.maps.Marker({
+        map: window.map,
+        icon: icon,
+        title: place.name,
+        position: place.geometry.location
+      }));
+
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    });
+    // window.map.fitBounds(bounds);
+    window.map.setZoom(17);
+    window.map.setCenter(markers[markers.length-1].getPosition());
   }
+
+
 
   createMarker(e) {
     console.log('search clicked');
@@ -155,8 +204,8 @@ class Search extends React.Component {
       return (
         <div id='search-container'>
           <h1>Places</h1>
-          <input id='google-search' type='text' placeholder='Enter City' onChange={this.updateSearch}></input>
-          <button id='search-button' onClick={this.createMarker}>Search</button>
+          <input id='google-search' type='text' placeholder='Enter City'></input>
+          <button id='search-button' onClick={this.createSearch}>Search</button>
           <p>Location not found!</p>
         </div>
       );
@@ -164,8 +213,8 @@ class Search extends React.Component {
       return (
         <div id='search-container'>
           <h1>Places</h1>
-          <input id='google-search' type='text' placeholder='Enter City' onChange={this.updateSearch}></input>
-          <button id='search-button' onClick={this.createMarker}>Search</button>
+          <input id='google-search' type='text' placeholder='Enter City'></input>
+          <button id='search-button' onClick={this.createSearch}>Search</button>
           <p id='errors'></p>
         </div>
       );
