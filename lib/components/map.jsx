@@ -7,7 +7,7 @@ class Map extends React.Component {
     this.loadMap();
     this.state = {};
     // html5 code to get current location from browser
-    // navigator.geolocation.getCurrentPosition((data) => {console.log(data)})
+    navigator.geolocation.getCurrentPosition((data) => {this.setCurrentLocation(data);});
   }
 
   loadMap() {
@@ -34,6 +34,14 @@ class Map extends React.Component {
     //   position: uluru,
     //   map: window.map
     // });
+  }
+
+  setCurrentLocation(loc) {
+    console.log(loc);
+    const lat = loc.coords.latitude;
+    const lng = loc.coords.longitude;
+    const uluru = {lat: lat, lng: lng};
+    window.map.setCenter(uluru);
   }
 
   render() {

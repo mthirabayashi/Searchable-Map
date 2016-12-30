@@ -22,6 +22,7 @@ class Search extends React.Component {
     const options = {
       bounds: defaultBounds
     };
+    // create the google search box
     const input = document.getElementById('google-search');
     window.searchBox = new google.maps.places.SearchBox(input);
     // const autocomplete = new google.maps.places.Autocomplete(input, options);
