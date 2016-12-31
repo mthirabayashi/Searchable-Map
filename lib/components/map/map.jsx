@@ -1,5 +1,6 @@
 import React from 'react';
 
+console.log('got to map component');
 class Map extends React.Component {
   constructor(props) {
     super(props);

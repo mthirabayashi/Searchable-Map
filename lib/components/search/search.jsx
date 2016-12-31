@@ -1,9 +1,13 @@
 import React from 'react';
 import $ from 'jquery';
 
+console.log('got to search.jsx');
+
 class Search extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
+    console.log('creating search');
     // this.createMarker = this.createMarker.bind(this);
     this.createSearch = this.createSearch.bind(this);
     // this.displayMarkers = this.displayMarkers.bind(this);
@@ -69,6 +73,7 @@ class Search extends React.Component {
       console.log(this.markers);
 
     });
+    this.props.addSearch(places);
     window.map.setZoom(18);
     window.map.setCenter(this.markers[this.markers.length-1].getPosition());
   }

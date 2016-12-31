@@ -1,18 +1,32 @@
 import React from 'react';
-import Map from './map';
-import Search from './search';
-import History from './history';
+import SearchContainer from './search/searchContainer';
+import MapContainer from './map/mapContainer';
+import HistoryContainer from './history/historyContainer';
 
-class App extends React.Component {
-  render() {
-    return (
-      <div id='app'>
-        <Search />
-        <Map />
-        <History />
-      </div>
-    );
-  }
-}
+const App = ({ route }) => {
+  console.log('loading app');
+  return (
+    <div id='app'>
+      <SearchContainer />
+      <MapContainer />
+      <HistoryContainer />
+    </div>
+  );
+};
 
 export default App;
+
+
+// class App extends React.Component {
+//   render() {
+//     return (
+//       <div id='app'>
+//         <searchContainer />
+//         <mapContainer />
+//         <History />
+//       </div>
+//     );
+//   }
+// }
+//
+// export default App;
