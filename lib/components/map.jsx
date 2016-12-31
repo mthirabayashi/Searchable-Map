@@ -5,9 +5,8 @@ class Map extends React.Component {
     super(props);
     console.log('creating map');
     this.loadMap();
+    this.getCurrentLocation();
     this.state = {};
-    // html5 code to get current location from browser
-    navigator.geolocation.getCurrentPosition((data) => {this.setCurrentLocation(data);});
   }
 
   loadMap() {
@@ -29,11 +28,13 @@ class Map extends React.Component {
     window.map.addListener('bounds_changed', () => {
       window.searchBox.setBounds(window.map.getBounds());
     });
+  }
 
-    // const marker = new google.maps.Marker({
-    //   position: uluru,
-    //   map: window.map
-    // });
+  getCurrentLocation() {
+    // html5 code to get current location from browser
+    navigator.geolocation.getCurrentPosition((data) => {
+      this.setCurrentLocation(data);
+    });
   }
 
   setCurrentLocation(loc) {
