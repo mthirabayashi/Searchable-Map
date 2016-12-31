@@ -1,13 +1,13 @@
 import React from 'react';
 import $ from 'jquery';
 
-console.log('got to search.jsx');
+// console.log('got to search.jsx');
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
-    console.log('creating search');
+    // console.log(props);
+    // console.log('creating search');
     // this.createMarker = this.createMarker.bind(this);
     this.createSearch = this.createSearch.bind(this);
     // this.displayMarkers = this.displayMarkers.bind(this);
@@ -20,7 +20,7 @@ class Search extends React.Component {
     };
   }
   componentDidMount() {
-    console.log('mounting search');
+    // console.log('mounting search');
     const defaultBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(37.763972, -122.441297),
       new google.maps.LatLng(37.783972, -122.421297));
@@ -38,9 +38,11 @@ class Search extends React.Component {
     if (places.length === 0) {
       return;
     }
-
+    console.log(this.props);
     // Clear out the old markers.
-    this.markers.forEach((marker) => {
+    this.props.markers.forEach((marker) => {
+      console.log('clearing marker from map');
+      console.log(marker);
       marker.setMap(null);
     });
 
@@ -63,19 +65,21 @@ class Search extends React.Component {
       };
 
       // Create a marker for each place.
-      this.markers.push(new google.maps.Marker({
+      const marker = new google.maps.Marker({
         map: window.map,
         icon: icon,
         title: place.name,
         position: place.geometry.location
-      }));
+      });
+      
+      this.props.addMarker(marker);
+      window.map.setZoom(18);
+      window.map.setCenter(marker.getPosition());
 
       // console.log(this.markers);
 
     });
     this.props.addSearch(places);
-    window.map.setZoom(18);
-    window.map.setCenter(this.markers[this.markers.length-1].getPosition());
   }
 
   // createMarker(e) {

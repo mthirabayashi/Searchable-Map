@@ -7,15 +7,14 @@ class Map extends React.Component {
     console.log('creating map');
     this.showAllMarkers = this.showAllMarkers.bind(this);
     this.clearAllMarkers = this.clearAllMarkers.bind(this);
-    this.loadMap();
+    // this.loadMap();
     this.getCurrentLocation();
-    this.markers = [];
     this.state = {};
   }
 
-  loadMap() {
-    console.log('loading map');
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   this.updateMarkers(nextProps.markers);
+  // }
 
   componentDidMount() {
     console.log('map mounted');
@@ -34,6 +33,10 @@ class Map extends React.Component {
     });
   }
 
+  loadMap() {
+    console.log('loading map');
+  }
+
   getCurrentLocation() {
     // html5 code to get current location from browser
     navigator.geolocation.getCurrentPosition((data) => {
@@ -48,47 +51,57 @@ class Map extends React.Component {
     const uluru = {lat: lat, lng: lng};
     window.map.setCenter(uluru);
   }
+  //
+  // updateMarkers(markers) {
+  //   markers.forEach((marker, idx) => {
+  //     if (idx < markers.length-1) {
+  //       marker.setMap(null);
+  //       marker = null;
+  //     }
+  //   });
+  // }
 
   showAllMarkers(e) {
     e.preventDefault();
 
     // Clear out the old markers.
-    this.markers.forEach((marker) => {
-      marker.setMap(null);
+    this.props.markers.forEach((marker) => {
+      marker.setMap(window.map);
     });
 
     console.log('clicked show all places');
-    this.props.history.forEach(place => {
-      const icon = {
-        url: "./resources/red_pin.png",
-        size: new google.maps.Size(75, 90),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25)
-      };
-
-      // Create a marker for each place.
-      this.markers.push(new google.maps.Marker({
-        map: window.map,
-        icon: icon,
-        title: place.name,
-        position: place.geometry.location
-      }));
-    });
-    window.map.setZoom(11);
+    // this.props.history.forEach(place => {
+    //   const icon = {
+    //     url: "./resources/red_pin.png",
+    //     size: new google.maps.Size(75, 90),
+    //     origin: new google.maps.Point(0, 0),
+    //     anchor: new google.maps.Point(17, 34),
+    //     scaledSize: new google.maps.Size(25, 25)
+    //   };
+    //
+    //   // Create a marker for each place.
+    //   this.markers.push(new google.maps.Marker({
+    //     map: window.map,
+    //     icon: icon,
+    //     title: place.name,
+    //     position: place.geometry.location
+    //   }));
+    // });
+    window.map.setZoom(12);
   }
 
   clearAllMarkers(e) {
     e.preventDefault();
-    console.log('clicked clear all markers');
-    console.log(this.props);
-    this.props.markers.forEach(marker => {
+    // console.log('clicked clear all markers');
+    // console.log(this.props);
+    this.props.markers.forEach((marker, idx) => {
       marker.setMap(null);
     });
+    // this.props.clearAllMarkers();
   }
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <div>
         <div id='map'>This is the map component</div>
