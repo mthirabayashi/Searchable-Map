@@ -5,8 +5,11 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     console.log('creating map');
+    this.showAllMarkers = this.showAllMarkers.bind(this);
+    this.clearAllMarkers = this.clearAllMarkers.bind(this);
     this.loadMap();
     this.getCurrentLocation();
+    this.markers = [];
     this.state = {};
   }
 
@@ -46,9 +49,54 @@ class Map extends React.Component {
     window.map.setCenter(uluru);
   }
 
+  showAllMarkers(e) {
+    e.preventDefault();
+
+    // Clear out the old markers.
+    this.markers.forEach((marker) => {
+      marker.setMap(null);
+    });
+
+    console.log('clicked show all places');
+    this.props.history.forEach(place => {
+      const icon = {
+        url: "./resources/red_pin.png",
+        size: new google.maps.Size(75, 90),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
+
+      // Create a marker for each place.
+      this.markers.push(new google.maps.Marker({
+        map: window.map,
+        icon: icon,
+        title: place.name,
+        position: place.geometry.location
+      }));
+    });
+    window.map.setZoom(11);
+  }
+
+  clearAllMarkers(e) {
+    e.preventDefault();
+    console.log('clicked clear all markers');
+    console.log(this.props);
+    this.props.markers.forEach(marker => {
+      marker.setMap(null);
+    });
+  }
+
   render() {
+    console.log(this.props);
     return (
-      <div id='map'>This is the map component</div>
+      <div>
+        <div id='map'>This is the map component</div>
+        <div id='map-controls'>
+          <button onClick={this.showAllMarkers}>Show All Recent Places</button>
+          <button onClick={this.clearAllMarkers}>Clear All Markers</button>
+        </div>
+      </div>
     );
   }
 

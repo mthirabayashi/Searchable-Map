@@ -36,3 +36,7 @@
 #errors {
   height: 12px;
 }
+
+.history-item {
+  border: 1px solid black;
+}

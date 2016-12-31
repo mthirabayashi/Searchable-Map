@@ -11,7 +11,10 @@ class HistoryItem extends React.Component {
 
   render() {
     return (
-      <div>History Item</div>
+      <div>
+        {this.props.place.name}
+        <button>X</button>
+      </div>
     );
   }
 }

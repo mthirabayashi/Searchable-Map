@@ -70,7 +70,7 @@ class Search extends React.Component {
         position: place.geometry.location
       }));
 
-      console.log(this.markers);
+      // console.log(this.markers);
 
     });
     this.props.addSearch(places);
