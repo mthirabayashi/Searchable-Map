@@ -33,7 +33,9 @@ class Search extends React.Component {
   }
 
   createSearch(e) {
+
     const places = window.searchBox.getPlaces();
+    console.log(places);
 
     if (places.length === 0) {
       return;
@@ -71,7 +73,7 @@ class Search extends React.Component {
         title: place.name,
         position: place.geometry.location
       });
-      
+
       this.props.addMarker(marker);
       window.map.setZoom(18);
       window.map.setCenter(marker.getPosition());

@@ -1,6 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
-import HistoryItem from './historyItem';
+import HistoryItemContainer from './historyItemContainer';
 
 class History extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class History extends React.Component {
         <h2>Recent History</h2>
         {this.props.history.map((place,idx) => (
           <div key={idx} className='history-item'>
-            <HistoryItem place={place}/>
+            <HistoryItemContainer place={place} idx={idx}/>
           </div>
         ))}
       </div>

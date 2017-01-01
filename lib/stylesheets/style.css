@@ -18,6 +18,22 @@
   border: 1px solid blue;
 }
 
+#map-controls {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+
+#map-controls > button {
+  height: 25px;
+  width: 175px;
+}
+
+#map-controls > button:hover {
+  cursor: pointer;
+  background-color: red;
+}
+
 #google-search {
   width: 300px;
   outline: none;
@@ -38,5 +54,25 @@
 }
 
 .history-item {
+  width: 300px;
+  cursor: pointer;
+  padding-left: 10px;
   border: 1px solid black;
+}
+
+.history-item:hover {
+  background-color: yellow;
+}
+
+.history-item > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete {
+  cursor: pointer;
+}
+
+.delete:hover {
+  background-color: red;
 }
