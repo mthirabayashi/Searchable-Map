@@ -16,11 +16,13 @@ class History extends React.Component {
     return (
       <div id='search-history'>
         <h2>Recent History</h2>
-        {this.props.history.map((place,idx) => (
-          <div key={idx} className='history-item'>
-            <HistoryItemContainer place={place} idx={idx}/>
-          </div>
-        ))}
+        <section id='history-container'>
+          {this.props.history.map((place,idx) => (
+            <div key={idx} className='history-item'>
+              <HistoryItemContainer place={place} idx={idx}/>
+            </div>
+          ))}
+        </section>
       </div>
     );
   }

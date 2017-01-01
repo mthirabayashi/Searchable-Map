@@ -8,14 +8,19 @@
 #search-container {
   display: flex;
   flex-direction: column;
+}
 
+#map-container {
+  width: 100%;
 }
 
 #map {
   margin-top: 10px;
   height: 400px;
-  width: 600px;
+  width: 80%;
+  min-width: 600px;
   border: 1px solid blue;
+  margin: 0 10%;
 }
 
 #map-controls {
@@ -53,11 +58,19 @@
   height: 12px;
 }
 
+#history-container {
+  display: inline-block;
+  width: 100%;
+  min-width: 640px;
+}
+
 .history-item {
   width: 300px;
   cursor: pointer;
   padding-left: 10px;
   border: 1px solid black;
+  float: left;
+  margin: 10px;
 }
 
 .history-item:hover {
@@ -75,4 +88,8 @@
 
 .delete:hover {
   background-color: red;
+}
+
+.item-info {
+  padding-right: 10px;
 }

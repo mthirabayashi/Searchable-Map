@@ -35,7 +35,7 @@ class HistoryItem extends React.Component {
   render() {
     return (
       <div onClick={this.toggleMarker}>
-        <section>
+        <section className='item-info'>
           <h3>{this.props.place.name}</h3>
           <p>{this.props.place.formatted_address}</p>
         </section>

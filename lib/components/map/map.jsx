@@ -103,7 +103,7 @@ class Map extends React.Component {
   render() {
     // console.log(this.props);
     return (
-      <div>
+      <div id='map-container'>
         <div id='map'>This is the map component</div>
         <div id='map-controls'>
           <button onClick={this.showAllMarkers}>Show All Recent Places</button>
