@@ -5,7 +5,11 @@ class HistoryItem extends React.Component {
     super(props);
     this.toggleMarker = this.toggleMarker.bind(this);
     this.delete = this.delete.bind(this);
+    this.displayInfo = this.displayInfo.bind(this);
     // console.log(props);
+    this.state = {
+      infoWindow: false
+    };
   }
   componentDidMount() {
     // console.log('mounting history item');
@@ -38,8 +42,32 @@ class HistoryItem extends React.Component {
   }
 
   displayInfo(e) {
+    // e.preventDefault();
     e.stopPropagation();
-    console.log('info clicked');
+    if (this.state.infoWindow) {
+      return;
+    }
+    const place = this.props.history[this.props.idx];
+    const open = place.opening_hours.open_now ? 'Currently Open' : 'Currently Closed';
+    const contentString = '<div>'+`<h4>${place.name}</h4>`+`<p>${place.formatted_address}</p>`+`<p>Rating: ${place.rating}`+`<p>${open}</p>`+'</div>';
+
+    const infoWindow = new google.maps.InfoWindow({
+        content: contentString
+    });
+
+    const marker = this.props.markers[this.props.idx];
+    infoWindow.open(window.map, marker);
+    infoWindow.addListener('closeclick', () => {
+      console.log('closing info window');
+      this.setState({infoWindow: false});
+    });
+    window.map.setCenter(marker.getPosition());
+    window.map.setZoom(20);
+    this.setState({infoWindow: true});
+
+    // window.map.event.addListener(marker, 'click', () => {
+    //     infoWindow.open(window.map, marker);
+    // });
   }
 
   render() {
@@ -54,9 +82,9 @@ class HistoryItem extends React.Component {
         <section className='item-info'>
           <h3>{this.props.place.name}</h3>
           <p>{this.props.place.formatted_address}</p>
-          <button>Info</button>
+          <a href="#map-container"><button onClick={this.displayInfo}>Info</button></a>
         </section>
-        <button onClick={this.delete} className='delete'>X</button>
+        <button onClick={this.delete}  className='delete'>X</button>
       </div>
     );
   }

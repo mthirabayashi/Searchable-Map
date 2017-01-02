@@ -91,9 +91,11 @@ class Search extends React.Component {
         window.map.setCenter(marker.getPosition());
      });
 
+     if (places.length === 1) {
+       window.map.setCenter(marker.getPosition());
+       window.map.setZoom(18);
+     }
     });
-    // window.map.setZoom(18);
-    // window.map.setCenter(marker.getPosition());
     // $('.history-item').addClass('highlight');
     this.props.addSearch(places);
   }

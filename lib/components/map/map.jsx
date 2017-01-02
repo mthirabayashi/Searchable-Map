@@ -64,7 +64,6 @@ class Map extends React.Component {
 
   showAllMarkers(e) {
     e.preventDefault();
-
     // Clear out the old markers.
     this.props.markers.forEach((marker) => {
       marker.setMap(window.map);
