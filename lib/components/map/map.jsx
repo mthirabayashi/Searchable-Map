@@ -108,8 +108,8 @@ class Map extends React.Component {
       <div id='map-container'>
         <div id='map'>This is the map component</div>
         <div id='map-controls'>
-          <button onClick={this.showAllMarkers}>Show All Recent Places</button>
-          <button onClick={this.clearAllMarkers}>Clear All Markers</button>
+          <button className='control-button' onClick={this.showAllMarkers}>Show All Recent Places</button>
+          <button className='control-button' onClick={this.clearAllMarkers}>Clear All Markers</button>
         </div>
       </div>
     );

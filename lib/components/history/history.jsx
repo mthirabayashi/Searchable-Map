@@ -26,7 +26,7 @@ class History extends React.Component {
     return (
       <div id='search-history'>
         <h2>Recent Results</h2>
-        <button onClick={this.clearResults}>Clear All Results</button>
+        <button className='control-button' onClick={this.clearResults}>Clear All Results</button>
         <section id='history-container'>
           {this.props.history.map((place,idx) => (
             <div key={idx} className='history-item'>

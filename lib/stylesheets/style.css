@@ -67,6 +67,11 @@
   flex-wrap: wrap;
 }
 
+.control-button {
+  height: 25px;
+  width: 175px;
+}
+
 .history-item {
   width: 300px;
   height: 150px;
