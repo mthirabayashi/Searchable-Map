@@ -10,6 +10,7 @@ class Search extends React.Component {
     // console.log('creating search');
     // this.createMarker = this.createMarker.bind(this);
     this.createSearch = this.createSearch.bind(this);
+    this.showResults = this.showResults.bind(this);
     // this.displayMarkers = this.displayMarkers.bind(this);
     // this.notFound = this.notFound.bind(this);
     // markers will be moved to redux app store
@@ -30,17 +31,88 @@ class Search extends React.Component {
     // create the google search box
     const input = document.getElementById('google-search');
     window.searchBox = new google.maps.places.SearchBox(input);
+    window.searchBox.addListener('places_changed', () => {
+        //displaySearchResults(map, searchBox, markers);
+    });
+    window.geocoder = new google.maps.Geocoder();
+
   }
 
+  // createSearch(e) {
+  //
+  //   const input = document.getElementById('google-search');
+  //   input.value = 'pizza';
+  //   input.focus();
+  //
+  //   const places = window.searchBox.getPlaces();
+  //   console.log(places);
+  //
+  //   if (places.length === 0) {
+  //     return;
+  //   }
+  //
+  //   // Clear out the old markers.
+  //   this.props.markers.forEach((marker) => {
+  //     console.log('clearing marker from map');
+  //     console.log(marker);
+  //     marker.setMap(null);
+  //   });
+  //
+  //   // For each place, get the icon, name and location.
+  //   // let bounds = new google.maps.LatLngBounds();
+  //   places.forEach((place) => {
+  //     if (!place.geometry) {
+  //       console.log("Returned place contains no geometry");
+  //       return;
+  //     }
+  //     //     console.log(place.icon);
+  //     //     // url: "https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png" -- default red marker
+  //     // url: place.icon
+  //     var icon = {
+  //       url: "./resources/red_pin.png",
+  //       size: new google.maps.Size(75, 90),
+  //       origin: new google.maps.Point(0, 0),
+  //       anchor: new google.maps.Point(17, 34),
+  //       scaledSize: new google.maps.Size(25, 25)
+  //     };
+  //
+  //     // Create a marker for each place.
+  //     const marker = new google.maps.Marker({
+  //       map: window.map,
+  //       icon: icon,
+  //       title: place.name,
+  //       position: place.geometry.location
+  //     });
+  //
+  //     this.props.addMarker(marker);
+  //     window.map.setZoom(18);
+  //     window.map.setCenter(marker.getPosition());
+  //
+  //     // console.log(this.markers);
+  //
+  //   });
+  //   this.props.addSearch(places);
+  // }
+
   createSearch(e) {
+    const query = document.getElementById('google-search').value;
+    const pyrmont = window.map.center;
+    // const pyrmont = new google.maps.LatLng(37.763972, -122.441297);
+    const request = {
+      location: pyrmont,
+      radius: '500',
+      query: query
+    };
 
-    const places = window.searchBox.getPlaces();
-    console.log(places);
+    const service = new google.maps.places.PlacesService(window.map);
+    service.textSearch(request, (places) => this.showResults(places));
+  }
 
+  showResults(places) {
     if (places.length === 0) {
       return;
     }
-    console.log(this.props);
+
     // Clear out the old markers.
     this.props.markers.forEach((marker) => {
       console.log('clearing marker from map');
@@ -150,7 +222,7 @@ class Search extends React.Component {
         <div id='search-container'>
           <h1>Places</h1>
           <input id='google-search' type='text' placeholder='Enter City'></input>
-          <button id='search-button' onClick={this.createSearch}>Search</button>
+          <button id='search-button' onClick={this.createSearch.bind(this)}>Search</button>
           <p id='errors'></p>
         </div>
       );
