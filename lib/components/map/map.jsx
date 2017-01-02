@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 
 console.log('got to map component');
 class Map extends React.Component {
@@ -18,10 +19,10 @@ class Map extends React.Component {
 
   componentDidMount() {
     console.log('map mounted');
-    const uluru = {lat: 37.773972, lng: -122.431297};
+    const center = {lat: 37.773972, lng: -122.431297};
     window.map = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
-      center: uluru,
+      center: center,
       mapTypeId: 'roadmap'
     });
     window.map.addListener('dblclick', () => {
@@ -45,11 +46,11 @@ class Map extends React.Component {
   }
 
   setCurrentLocation(loc) {
-    console.log(loc);
+    // console.log(loc);
     const lat = loc.coords.latitude;
     const lng = loc.coords.longitude;
-    const uluru = {lat: lat, lng: lng};
-    window.map.setCenter(uluru);
+    const center = {lat: lat, lng: lng};
+    window.map.setCenter(center);
   }
   //
   // updateMarkers(markers) {
@@ -68,6 +69,7 @@ class Map extends React.Component {
     this.props.markers.forEach((marker) => {
       marker.setMap(window.map);
     });
+    $(".history-item").addClass( "highlight" );
 
     console.log('clicked show all places');
     // this.props.history.forEach(place => {
@@ -97,6 +99,7 @@ class Map extends React.Component {
     this.props.markers.forEach((marker, idx) => {
       marker.setMap(null);
     });
+    $(".history-item").removeClass( "highlight" );
     // this.props.clearAllMarkers();
   }
 

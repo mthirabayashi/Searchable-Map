@@ -31,75 +31,17 @@ class Search extends React.Component {
     // create the google search box
     const input = document.getElementById('google-search');
     window.searchBox = new google.maps.places.SearchBox(input);
-    window.searchBox.addListener('places_changed', () => {
+    // window.searchBox.addListener('places_changed', () => {
         //displaySearchResults(map, searchBox, markers);
-    });
-    window.geocoder = new google.maps.Geocoder();
-
+    // });
   }
-
-  // createSearch(e) {
-  //
-  //   const input = document.getElementById('google-search');
-  //   input.value = 'pizza';
-  //   input.focus();
-  //
-  //   const places = window.searchBox.getPlaces();
-  //   console.log(places);
-  //
-  //   if (places.length === 0) {
-  //     return;
-  //   }
-  //
-  //   // Clear out the old markers.
-  //   this.props.markers.forEach((marker) => {
-  //     console.log('clearing marker from map');
-  //     console.log(marker);
-  //     marker.setMap(null);
-  //   });
-  //
-  //   // For each place, get the icon, name and location.
-  //   // let bounds = new google.maps.LatLngBounds();
-  //   places.forEach((place) => {
-  //     if (!place.geometry) {
-  //       console.log("Returned place contains no geometry");
-  //       return;
-  //     }
-  //     //     console.log(place.icon);
-  //     //     // url: "https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png" -- default red marker
-  //     // url: place.icon
-  //     var icon = {
-  //       url: "./resources/red_pin.png",
-  //       size: new google.maps.Size(75, 90),
-  //       origin: new google.maps.Point(0, 0),
-  //       anchor: new google.maps.Point(17, 34),
-  //       scaledSize: new google.maps.Size(25, 25)
-  //     };
-  //
-  //     // Create a marker for each place.
-  //     const marker = new google.maps.Marker({
-  //       map: window.map,
-  //       icon: icon,
-  //       title: place.name,
-  //       position: place.geometry.location
-  //     });
-  //
-  //     this.props.addMarker(marker);
-  //     window.map.setZoom(18);
-  //     window.map.setCenter(marker.getPosition());
-  //
-  //     // console.log(this.markers);
-  //
-  //   });
-  //   this.props.addSearch(places);
-  // }
 
   createSearch(e) {
     const query = document.getElementById('google-search').value;
-    const pyrmont = window.map.center;
-    // const pyrmont = new google.maps.LatLng(37.763972, -122.441297);
+    const center = window.map.center;
+    // const center = new google.maps.LatLng(37.763972, -122.441297);
     const request = {
-      location: pyrmont,
+      location: center,
       radius: '500',
       query: query
     };
@@ -113,16 +55,11 @@ class Search extends React.Component {
       return;
     }
 
-    // Clear out the old markers.
-    this.props.markers.forEach((marker) => {
-      console.log('clearing marker from map');
-      console.log(marker);
-      marker.setMap(null);
-    });
+    this.clearMarkers();
 
     // For each place, get the icon, name and location.
     // let bounds = new google.maps.LatLngBounds();
-    places.forEach((place) => {
+    places.forEach((place, idx) => {
       if (!place.geometry) {
         console.log("Returned place contains no geometry");
         return;
@@ -143,17 +80,30 @@ class Search extends React.Component {
         map: window.map,
         icon: icon,
         title: place.name,
-        position: place.geometry.location
+        position: place.geometry.location,
+        id: idx
       });
 
       this.props.addMarker(marker);
-      window.map.setZoom(18);
-      window.map.setCenter(marker.getPosition());
 
-      // console.log(this.markers);
+      marker.addListener('click', () => {
+        // center map at marker
+        window.map.setCenter(marker.getPosition());
+     });
 
     });
+    // window.map.setZoom(18);
+    // window.map.setCenter(marker.getPosition());
+    // $('.history-item').addClass('highlight');
     this.props.addSearch(places);
+  }
+
+  clearMarkers() {
+    this.props.markers.forEach((marker) => {
+      // console.log('clearing marker from map');
+      // console.log(marker);
+      marker.setMap(null);
+    });
   }
 
   // createMarker(e) {
