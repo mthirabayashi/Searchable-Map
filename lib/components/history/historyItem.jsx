@@ -82,7 +82,7 @@ class HistoryItem extends React.Component {
         <section className='item-info'>
           <h3>{this.props.place.name}</h3>
           <p>{this.props.place.formatted_address}</p>
-          <a href="#map-container"><button onClick={this.displayInfo}>Info</button></a>
+          <a href="#map-container"><button onClick={this.displayInfo} className='info-button'>Info</button></a>
         </section>
         <button onClick={this.delete}  className='delete'>X</button>
       </div>

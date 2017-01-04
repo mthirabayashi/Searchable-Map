@@ -5,20 +5,13 @@ console.log('got to map component');
 class Map extends React.Component {
   constructor(props) {
     super(props);
-    console.log('creating map');
     this.showAllMarkers = this.showAllMarkers.bind(this);
     this.clearAllMarkers = this.clearAllMarkers.bind(this);
-    // this.loadMap();
     this.getCurrentLocation();
     this.state = {};
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   this.updateMarkers(nextProps.markers);
-  // }
-
   componentDidMount() {
-    console.log('map mounted');
     const center = {lat: 37.773972, lng: -122.431297};
     window.map = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
@@ -32,10 +25,6 @@ class Map extends React.Component {
     window.map.addListener('bounds_changed', () => {
       window.searchBox.setBounds(window.map.getBounds());
     });
-  }
-
-  loadMap() {
-    console.log('loading map');
   }
 
   getCurrentLocation() {
@@ -52,15 +41,6 @@ class Map extends React.Component {
     const center = {lat: lat, lng: lng};
     window.map.setCenter(center);
   }
-  //
-  // updateMarkers(markers) {
-  //   markers.forEach((marker, idx) => {
-  //     if (idx < markers.length-1) {
-  //       marker.setMap(null);
-  //       marker = null;
-  //     }
-  //   });
-  // }
 
   showAllMarkers(e) {
     e.preventDefault();
@@ -70,40 +50,34 @@ class Map extends React.Component {
     });
     $(".history-item").addClass( "highlight" );
 
-    console.log('clicked show all places');
-    // this.props.history.forEach(place => {
-    //   const icon = {
-    //     url: "./resources/red_pin.png",
-    //     size: new google.maps.Size(75, 90),
-    //     origin: new google.maps.Point(0, 0),
-    //     anchor: new google.maps.Point(17, 34),
-    //     scaledSize: new google.maps.Size(25, 25)
-    //   };
-    //
-    //   // Create a marker for each place.
-    //   this.markers.push(new google.maps.Marker({
-    //     map: window.map,
-    //     icon: icon,
-    //     title: place.name,
-    //     position: place.geometry.location
-    //   }));
-    // });
-    window.map.setZoom(12);
+    // zoom out on map until all markers are visible
+    let notVisible = true;
+    let zoom = window.map.getZoom();
+    const markers = this.props.markers;
+    const inBounds = (marker) => {
+      return window.map.getBounds().contains(marker.getPosition());
+    };
+    while (notVisible) {
+      notVisible = false;
+      markers.forEach( marker => {
+        if (!inBounds(marker)) {
+          zoom -= 1;
+          notVisible = true;
+          window.map.setZoom(zoom);
+        }
+      });
+    }
   }
 
   clearAllMarkers(e) {
     e.preventDefault();
-    // console.log('clicked clear all markers');
-    // console.log(this.props);
     this.props.markers.forEach((marker, idx) => {
       marker.setMap(null);
     });
     $(".history-item").removeClass( "highlight" );
-    // this.props.clearAllMarkers();
   }
 
   render() {
-    // console.log(this.props);
     return (
       <div id='map-container'>
         <div id='map'>This is the map component</div>
@@ -115,16 +89,5 @@ class Map extends React.Component {
     );
   }
 
-  // render() {
-  //   console.log(this.state.loaded);
-  //
-  //   if (!this.state.loaded) {
-  //     console.log('loading map...');
-  //     return <div id='map'>Loading...</div>;
-  //   }
-  //   return (
-  //     <div id='map'>Map will go here</div>
-  //   );
-  // }
 }
 export default Map;
