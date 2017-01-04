@@ -61,3 +61,11 @@ Search results are populated based on the search criteria. The 'Info' button dis
 - ReactJS: Renders various components on the page and handles updates to those components based on user interaction
 - Redux: Holds an application wide store used by various React components that manipulates the the objects displayed on the map.
 - Webpack: bundled various scripts
+
+## Future Features
+There are many additional features that can be added to this application to improve the user experience.  Some of potential features these include:
+- Saved searches / Backend user support
+  - The base of Redux is already implemented and could handle a logged in user who could potentially save their previous searches or results
+- Email support for sending search results
+  - One use case for this application could be manually generating a list of nearby places that could be emailed to friends or family
+- Pre-defined searches for public transit, restaurants, or city landmarks
