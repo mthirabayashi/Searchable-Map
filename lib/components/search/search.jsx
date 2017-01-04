@@ -1,14 +1,9 @@
 import React from 'react';
 import $ from 'jquery';
 
-// console.log('got to search.jsx');
-
 class Search extends React.Component {
   constructor(props) {
     super(props);
-    // console.log(props);
-    // console.log('creating search');
-    // this.createMarker = this.createMarker.bind(this);
     this.createSearch = this.createSearch.bind(this);
     this.showResults = this.showResults.bind(this);
     // this.displayMarkers = this.displayMarkers.bind(this);
@@ -21,7 +16,6 @@ class Search extends React.Component {
     };
   }
   componentDidMount() {
-    // console.log('mounting search');
     const defaultBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(37.763972, -122.441297),
       new google.maps.LatLng(37.783972, -122.421297));
@@ -61,15 +55,14 @@ class Search extends React.Component {
     this.clearMarkers();
 
     // For each place, get the icon, name and location.
-    // let bounds = new google.maps.LatLngBounds();
     places.forEach((place, idx) => {
       if (!place.geometry) {
         console.log("Returned place contains no geometry");
         return;
       }
-      //     console.log(place.icon);
       //     // url: "https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png" -- default red marker
       // url: place.icon
+      // use custom marker icon image
       var icon = {
         url: "./resources/red_pin.png",
         size: new google.maps.Size(75, 90),
@@ -94,75 +87,23 @@ class Search extends React.Component {
         window.map.setCenter(marker.getPosition());
      });
 
+    //  center map if there is only one search result
      if (places.length === 1) {
        window.map.setCenter(marker.getPosition());
        window.map.setZoom(18);
      }
     });
-    // $('.history-item').addClass('highlight');
     this.props.addSearch(places);
   }
 
   clearMarkers() {
+    // remove all markers from map
     this.props.markers.forEach((marker) => {
-      // console.log('clearing marker from map');
-      // console.log(marker);
       marker.setMap(null);
     });
   }
 
-  // createMarker(e) {
-  //   console.log('search clicked');
-  //   // console.log(e);
-  //   e.preventDefault();
-  //   const place = document.getElementById('google-search').value;
-  //   console.log(place);
-  //   let places = this.state.places;
-  //   if (!places.includes(place)) {
-  //     places.push(place);
-  //   }
-  //   console.log(places);
-  //   this.setState({places: places}, this.displayMarkers());
-  //   // this.setState({places: places}, this.displayMarkers());
-  // }
-  //
-  // displayMarkers() {
-  //   //loop all the addresses and call a marker for each one
-  //   const addressesArray = this.state.places;
-  //   const that = this;
-  //   for (let x = 0; x < addressesArray.length; x++) {
-  //     $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address='+addressesArray[x]+'&sensor=false', null, function (data) {
-  //       console.log(data);
-  //       if (data.status === 'ZERO_RESULTS') {
-  //         // alert('could not find on map');
-  //         return that.notFound();
-  //       }
-  //       const p = data.results[0].geometry.location;
-  //       const latlng = new google.maps.LatLng(p.lat, p.lng);
-  //       const aMarker= new google.maps.Marker({
-  //           position: latlng, //it will place marker based on the addresses, which they will be translated as geolocations.
-  //           map: window.map
-  //       });
-  //       aMarker.addListener('click', function() {
-  //         // window.map.setZoom(12);
-  //         window.map.setCenter(aMarker.getPosition());
-  //       });
-  //       console.log(x);
-  //       console.log(addressesArray.length-1);
-  //       if (x === addressesArray.length-1) {
-  //         window.map.setZoom(12);
-  //         window.map.setCenter(aMarker.getPosition());
-  //       }
-  //     });
-  //   }
-  // }
-  //
-  // notFound() {
-  //   this.setState({errors: true});
-  // }
-
   render() {
-    // console.log(this.state);
     if (this.state.errors) {
       return (
         <div id='search-container'>

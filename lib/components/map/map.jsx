@@ -1,7 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
 
-console.log('got to map component');
 class Map extends React.Component {
   constructor(props) {
     super(props);
@@ -35,7 +34,6 @@ class Map extends React.Component {
   }
 
   setCurrentLocation(loc) {
-    // console.log(loc);
     const lat = loc.coords.latitude;
     const lng = loc.coords.longitude;
     const center = {lat: lat, lng: lng};

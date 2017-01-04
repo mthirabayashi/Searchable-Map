@@ -48,6 +48,7 @@
   border: 1px solid black;
   height: 24px;
   font-size: 18px;
+  text-align: center;
 }
 
 #search-button {

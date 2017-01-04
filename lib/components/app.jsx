@@ -4,7 +4,6 @@ import MapContainer from './map/mapContainer';
 import HistoryContainer from './history/historyContainer';
 
 const App = ({ route }) => {
-  console.log('loading app');
   return (
     <div id='app'>
       <SearchContainer />
@@ -15,18 +14,3 @@ const App = ({ route }) => {
 };
 
 export default App;
-
-
-// class App extends React.Component {
-//   render() {
-//     return (
-//       <div id='app'>
-//         <searchContainer />
-//         <mapContainer />
-//         <History />
-//       </div>
-//     );
-//   }
-// }
-//
-// export default App;

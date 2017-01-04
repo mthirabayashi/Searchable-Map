@@ -6,15 +6,11 @@ class History extends React.Component {
   constructor(props) {
     super(props);
     this.clearResults = this.clearResults.bind(this);
-    // console.log('creating history');
-  }
-  componentDidMount() {
-    // console.log('mounting history');
   }
 
   clearResults() {
-    console.log('clearing history');
     this.props.clearHistory();
+    // clear markers off map
     this.props.markers.forEach((marker) => {
       marker.setMap(null);
     });
@@ -22,7 +18,6 @@ class History extends React.Component {
   }
 
   render() {
-    // console.log(this.props);
     return (
       <div id='search-history'>
         <h2>Recent Results</h2>

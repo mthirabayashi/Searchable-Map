@@ -6,14 +6,12 @@ class HistoryItem extends React.Component {
     this.toggleMarker = this.toggleMarker.bind(this);
     this.delete = this.delete.bind(this);
     this.displayInfo = this.displayInfo.bind(this);
-    // console.log(props);
     this.state = {
       infoWindow: false
     };
   }
   componentDidMount() {
-    // console.log('mounting history item');
-    // console.log(this.props);
+    // markers are displayed and result item is highlighted by default
     $($('.history-item')[this.props.idx]).addClass('highlight');
   }
 
@@ -30,7 +28,6 @@ class HistoryItem extends React.Component {
       $($(".history-item")[this.props.idx]).addClass( "highlight" );
     }
     window.map.setCenter(location);
-    // console.log('show marker event');
   }
 
   delete(e) {
@@ -48,6 +45,7 @@ class HistoryItem extends React.Component {
       return;
     }
     const place = this.props.history[this.props.idx];
+    // unknown hours for the results without listed hours
     let open = 'Unknown Hours';
     if (place.opening_hours) {
       open = place.opening_hours.open_now ? 'Currently Open' : 'Currently Closed';
@@ -61,16 +59,12 @@ class HistoryItem extends React.Component {
     const marker = this.props.markers[this.props.idx];
     infoWindow.open(window.map, marker);
     infoWindow.addListener('closeclick', () => {
-      console.log('closing info window');
       this.setState({infoWindow: false});
     });
     window.map.setCenter(marker.getPosition());
     window.map.setZoom(20);
     this.setState({infoWindow: true});
 
-    // window.map.event.addListener(marker, 'click', () => {
-    //     infoWindow.open(window.map, marker);
-    // });
   }
 
   render() {
