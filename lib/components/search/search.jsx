@@ -38,6 +38,9 @@ class Search extends React.Component {
 
   createSearch(e) {
     const query = document.getElementById('google-search').value;
+    if (query === '') {
+      return;
+    }
     const center = window.map.center;
     // const center = new google.maps.LatLng(37.763972, -122.441297);
     const request = {

@@ -48,7 +48,10 @@ class HistoryItem extends React.Component {
       return;
     }
     const place = this.props.history[this.props.idx];
-    const open = place.opening_hours.open_now ? 'Currently Open' : 'Currently Closed';
+    let open = 'Unknown Hours';
+    if (place.opening_hours) {
+      open = place.opening_hours.open_now ? 'Currently Open' : 'Currently Closed';
+    }
     const contentString = '<div>'+`<h4>${place.name}</h4>`+`<p>${place.formatted_address}</p>`+`<p>Rating: ${place.rating}`+`<p>${open}</p>`+'</div>';
 
     const infoWindow = new google.maps.InfoWindow({

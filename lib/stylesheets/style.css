@@ -84,6 +84,7 @@
   border: 1px solid black;
   height: 25px;
   cursor: pointer;
+  outline: none;
 }
 
 .control-button:hover {
@@ -122,6 +123,7 @@
 }
 
 .item-info {
+  width: 100%;
   padding-right: 10px;
 }
 
@@ -135,6 +137,7 @@
   width: 40px;
   border: 1px solid black;
   cursor: pointer;
+  outline: none;
 }
 
 .info-button:hover {
