@@ -6,8 +6,6 @@ class Search extends React.Component {
     super(props);
     this.createSearch = this.createSearch.bind(this);
     this.showResults = this.showResults.bind(this);
-    // this.displayMarkers = this.displayMarkers.bind(this);
-    // this.notFound = this.notFound.bind(this);
     // markers will be moved to redux app store
     this.markers = [];
     this.state = {
